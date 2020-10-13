@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  mockserver:
+    image: mockserver/mockserver
+    ports:
+      - "1070:1080"
+    environment:
+      - MOCKSERVER_TLS_MUTUAL_AUTHENTICATION_REQUIRED=true
+      - MOCKSERVER_TLS_MUTUAL_AUTHENTICATION_CERTIFICATE_CHAIN=/certificats/ca.pem
+      - MOCKSERVER_TLS_PRIVATE_KEY_PATH=/certificats/mockserver.PKCS8.key
+      - MOCKSERVER_TLS_X509_CERTIFICATE_PATH=/certificats/mockserver.crt
+      - MOCKSERVER_LOG_LEVEL=debug
+      - MOCKSERVER_WATCH_INITIALIZATION_JSON=true
+      - MOCKSERVER_INITIALIZATION_JSON_PATH=mockserverInitialization.json
+    volumes:
+      - ./expectations/mockserverInitialization.json:/mockserverInitialization.json
+      - ./certificats:/certificats
